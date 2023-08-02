@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const SelectPeriodView());
+  runApp(const MainView());
 }
 
-class SelectPeriodView extends StatelessWidget {
-  const SelectPeriodView({Key? key}) : super(key: key);
+class MainView extends StatelessWidget {
+  const MainView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Remove the debug banner
+      /*// Remove the debug banner
       debugShowCheckedModeBanner: false,
       title: 'KindaCode.com',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
+        primarySwatch: Colors.white,
+      ),*/
       home: const HomeScreen(),
     );
   }
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       firstDate: DateTime(2023, 1, 1),
       lastDate: DateTime(2030, 12, 31),
       currentDate: DateTime.now(),
-      saveText: 'Next',
+      saveText: 'Done',
     );
 
     if (result != null) {
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
       //appBar: AppBar(title: const Text('KindaCode.com')),
       body: _selectedDateRange == null
           ? const Center(
-        //child: Text('Welcome to PicTogether'),
+        child: Text('Welcome to PicTogether'),
       )
           : Padding(
         padding: const EdgeInsets.all(30),
