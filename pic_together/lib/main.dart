@@ -1,12 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:pic_together/view/main_view/main_view.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  var db = FirebaseFirestore.instance;
+
+  // Create a new user with a first and last name
+  final user = <String, dynamic>{
+    "first": "Ada",
+    "last": "Lovelace",
+    "born": 1815
+  };
+
+// Add a new document with a generated ID
+  await db.collection("users").add(user);
+  print("qweqweqw");
 
   runApp(const MyApp());
 }
