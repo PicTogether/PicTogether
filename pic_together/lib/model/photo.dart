@@ -6,6 +6,6 @@ class Photo {
   Photo(String id, String uploaderId, String uploadTime) {
     this.id = id;
     this.uploaderId = uploaderId;
-    this.uploadTime = uploadTime
+    this.uploadTime = uploadTime;
   }
 }
