@@ -23,6 +23,13 @@ class _MainViewState extends State<MainView> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('PicTogether'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {  },
+              tooltip: '약속 추가',
+            )
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -106,14 +113,6 @@ class _MainViewState extends State<MainView> {
                   ),
                 ),
               ),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    '선택된 날짜: ${calenderSelectedDate?.toString()}',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -123,10 +122,10 @@ class _MainViewState extends State<MainView> {
           children: [
             FloatingActionButton(
               onPressed: () {
-                // 약속 추가하는 작업 수행
+                // 사진첩 들어가는는 작업 수행
               },
-              child: Icon(Icons.add),
-              tooltip: '약속 추가',
+              child: Icon(Icons.photo_library),
+              tooltip: '사진첩',
             ),
             SizedBox(height: 16),
             FloatingActionButton(
