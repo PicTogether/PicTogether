@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:pic_together/view/main_view/main_view.dart';
 import 'package:pic_together/view/appointment_view/select_period_view.dart';
+import 'model/user.dart';
+import 'controller/firebase_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,16 +17,16 @@ void main() async {
 
   var db = FirebaseFirestore.instance;
 
-  // Create a new user with a first and last name
-  final user = <String, dynamic>{
-    "first": "Ada",
-    "last": "Lovelace",
-    "born": 1815
-  };
+  // firebase test
+  FirebaseController firebaseController = FirebaseController();
 
-// Add a new document with a generated ID
-  await db.collection("users").add(user);
-  print("qweqweqw");
+  User user = User.newUser(
+    'test',
+    '1234567890',
+  );
+
+  // send user data to firebase
+  firebaseController.sendUserData(user);
 
   runApp(const MyApp());
 }
