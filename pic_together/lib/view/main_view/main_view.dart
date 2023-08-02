@@ -22,10 +22,14 @@ class _MainViewState extends State<MainView> {
       title: 'Calender Flutter AJ',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('PicTogether'),
+          backgroundColor: Colors.white,
+          title: Text(
+              'PicTogether',
+          style: TextStyle(color: Colors.black),),
           actions: [
             IconButton(
-              icon: Icon(Icons.add),
+              icon: Icon(Icons.add,
+              color: Colors.black,),
               onPressed: () {  },
               tooltip: '약속 추가',
             )
@@ -124,7 +128,8 @@ class _MainViewState extends State<MainView> {
               onPressed: () {
                 // 사진첩 들어가는는 작업 수행
               },
-              child: Icon(Icons.photo_library),
+              child: Icon(Icons.photo_library,),
+              backgroundColor: Color(0xff655DBB),
               tooltip: '사진첩',
             ),
             SizedBox(height: 16),
@@ -132,7 +137,8 @@ class _MainViewState extends State<MainView> {
               onPressed: () {
                 // 홈 화면으로 이동하는 작업 수행
               },
-              child: Icon(Icons.home),
+              child: Icon(Icons.home,),
+              backgroundColor: Color(0xff655DBB),
               tooltip: '홈 화면',
             ),
             SizedBox(height: 16),
@@ -140,7 +146,8 @@ class _MainViewState extends State<MainView> {
               onPressed: () {
                 // 친구 추가 화면으로 이동하는 작업 수행
               },
-              child: Icon(Icons.person_add),
+              child: Icon(Icons.person_add,),
+              backgroundColor: Color(0xff655DBB),
               tooltip: '친구 추가',
             ),
           ],
