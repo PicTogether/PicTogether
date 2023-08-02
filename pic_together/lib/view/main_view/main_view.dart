@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_flutter_aj/calender_flutter.dart';
+import 'package:pic_together/controller/firebase_controller.dart';
+import 'package:pic_together/model/appointment.dart';
 
 void main() {
   runApp(const MainView());
@@ -22,8 +24,24 @@ class _MainViewState extends State<MainView> {
       title: 'Calender Flutter AJ',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('PicTogether'),
-        ),
+            backgroundColor: Colors.white,
+            title: const Text(
+              'PicTogether',
+              style: TextStyle(color: Colors.black),
+            ),
+            leading: GestureDetector(
+              onTap: () {
+                _showAppointmentPopup(context);
+              },
+              child: const SizedBox(
+                width: 50,
+                height: 50,
+                child: Icon(
+                  Icons.add,
+                  color: Colors.black,
+                ),
+              ),
+            )),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -40,8 +58,8 @@ class _MainViewState extends State<MainView> {
                   },
                   backArrow: const DecoratedBox(
                     decoration: BoxDecoration(
-                    color: Colors.white,
-                    //shape : BoxShape.circle,
+                      color: Colors.white,
+                      //shape : BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.keyboard_arrow_left_rounded,
@@ -106,14 +124,6 @@ class _MainViewState extends State<MainView> {
                   ),
                 ),
               ),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    '선택된 날짜: ${calenderSelectedDate?.toString()}',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -123,17 +133,23 @@ class _MainViewState extends State<MainView> {
           children: [
             FloatingActionButton(
               onPressed: () {
-                // 약속 추가하는 작업 수행
+                // 사진첩 들어가는는 작업 수행
               },
-              child: Icon(Icons.add),
-              tooltip: '약속 추가',
+              child: Icon(
+                Icons.photo_library,
+              ),
+              backgroundColor: Color(0xff655DBB),
+              tooltip: '사진첩',
             ),
             SizedBox(height: 16),
             FloatingActionButton(
               onPressed: () {
                 // 홈 화면으로 이동하는 작업 수행
               },
-              child: Icon(Icons.home),
+              child: Icon(
+                Icons.home,
+              ),
+              backgroundColor: Color(0xff655DBB),
               tooltip: '홈 화면',
             ),
             SizedBox(height: 16),
@@ -141,12 +157,88 @@ class _MainViewState extends State<MainView> {
               onPressed: () {
                 // 친구 추가 화면으로 이동하는 작업 수행
               },
-              child: Icon(Icons.person_add),
+              child: Icon(
+                Icons.person_add,
+              ),
+              backgroundColor: Color(0xff655DBB),
               tooltip: '친구 추가',
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void _showAppointmentPopup(BuildContext context) {
+    String name = '';
+    DateTime selectedDate = DateTime.now();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('약속 추가'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Input field for appointment name
+              TextField(
+                onChanged: (value) {
+                  name = value;
+                },
+                decoration: InputDecoration(labelText: '약속 이름'),
+              ),
+              SizedBox(height: 16),
+              // Date picker for appointment date
+              ElevatedButton(
+                onPressed: () {
+                  // Show the date picker when the button is pressed
+                  showDatePicker(
+                    context: context,
+                    initialDate: selectedDate,
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2100),
+                  ).then((value) {
+                    if (value != null) {
+                      // Update the selectedDate with the picked date
+                      selectedDate = value;
+                    }
+                  });
+                },
+                child: Text('날짜 선택'),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Submit button pressed, do your logic here
+                if (name.isNotEmpty) {
+                  // Execute your logic here with 'name' and 'selectedDate'
+                  print('Appointment Name: $name');
+                  print('Selected Date: $selectedDate');
+                }
+
+                Appointment appointment =
+                    Appointment.newAppointment(name, selectedDate);
+
+                FirebaseController().sendAppointmentData(appointment);
+
+                // Close the popup
+                Navigator.of(context).pop();
+              },
+              child: Text('추가'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Close the popup when the cancel button is pressed
+                Navigator.of(context).pop();
+              },
+              child: Text('취소'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

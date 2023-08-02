@@ -1,7 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:pic_together/view/main_view/main_view.dart';
+import 'package:pic_together/view/appointment_view/select_period_view.dart';
+import 'model/user.dart';
+import 'controller/firebase_controller.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  var db = FirebaseFirestore.instance;
+
+  // firebase test
+  FirebaseController firebaseController = FirebaseController();
+
+  User user = User.newUser(
+    'test',
+    '1234567890',
+  );
+
+  // send user data to firebase
+  firebaseController.sendUserData(user);
+
   runApp(const MyApp());
 }
 
