@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainView());
+  runApp(const SelectPeriodView());
 }
 
-class MainView extends StatelessWidget {
-  const MainView({Key? key}) : super(key: key);
+class SelectPeriodView extends StatelessWidget {
+  const SelectPeriodView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

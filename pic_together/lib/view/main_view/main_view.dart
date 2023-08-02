@@ -1,12 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_flutter_aj/calender_flutter.dart';
-import 'package:pic_together/view/add_friend_view/add_friend_view.dart';
-import 'package:pic_together/view/gallery_view/gallery_view.dart';
-import 'package:pic_together/view/appointment_view/add_appointment_view.dart';
-
-import '../../controller/firebase_controller.dart';
-import '../../model/appointment.dart';
+import 'package:pic_together/controller/firebase_controller.dart';
+import 'package:pic_together/model/appointment.dart';
 
 void main() {
   runApp(const MainView());
@@ -28,19 +24,24 @@ class _MainViewState extends State<MainView> {
       title: 'Calender Flutter AJ',
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            'PicTogether',
-            style: TextStyle(color: Colors.black),),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.add,
-                color: Colors.black,),
-              onPressed: () {  },
-              tooltip: '약속 추가',
-            )
-          ],
-        ),
+            backgroundColor: Colors.white,
+            title: const Text(
+              'PicTogether',
+              style: TextStyle(color: Colors.black),
+            ),
+            leading: GestureDetector(
+              onTap: () {
+                _showAppointmentPopup(context);
+              },
+              child: const SizedBox(
+                width: 50,
+                height: 50,
+                child: Icon(
+                  Icons.add,
+                  color: Colors.black,
+                ),
+              ),
+            )),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -132,14 +133,11 @@ class _MainViewState extends State<MainView> {
           children: [
             FloatingActionButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>GalleryView(),
-                    ),
-                );
+                // 사진첩 들어가는는 작업 수행
               },
-              child: Icon(Icons.photo_library,),
+              child: Icon(
+                Icons.photo_library,
+              ),
               backgroundColor: Color(0xff655DBB),
               tooltip: '사진첩',
             ),
@@ -147,14 +145,10 @@ class _MainViewState extends State<MainView> {
             FloatingActionButton(
               onPressed: () {
                 // 홈 화면으로 이동하는 작업 수행
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>MainView(),
-                  ),
-                );
               },
-              child: Icon(Icons.home,),
+              child: Icon(
+                Icons.home,
+              ),
               backgroundColor: Color(0xff655DBB),
               tooltip: '홈 화면',
             ),
@@ -162,14 +156,10 @@ class _MainViewState extends State<MainView> {
             FloatingActionButton(
               onPressed: () {
                 // 친구 추가 화면으로 이동하는 작업 수행
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                    builder: (context) =>AddFriendView(),
-                    ),
-                );
               },
-              child: Icon(Icons.person_add,),
+              child: Icon(
+                Icons.person_add,
+              ),
               backgroundColor: Color(0xff655DBB),
               tooltip: '친구 추가',
             ),
@@ -178,6 +168,7 @@ class _MainViewState extends State<MainView> {
       ),
     );
   }
+
   void _showAppointmentPopup(BuildContext context) {
     String name = '';
     DateTime selectedDate = DateTime.now();
