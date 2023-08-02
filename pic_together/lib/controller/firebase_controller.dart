@@ -27,7 +27,6 @@ class FirebaseController {
 
       return true;
     } catch (e) {
-      print('Failed to send data: $e');
       return false;
     }
   }
@@ -50,7 +49,6 @@ class FirebaseController {
 
       return true;
     } catch (e) {
-      print('Failed to send data: $e');
       return false;
     }
   }
@@ -73,7 +71,6 @@ class FirebaseController {
 
       return true;
     } catch (e) {
-      print('Failed to send data: $e');
       return false;
     }
   }
@@ -100,7 +97,6 @@ class FirebaseController {
 
       return true;
     } catch (e) {
-      print('Failed to send data: $e');
       return false;
     }
   }
@@ -128,7 +124,6 @@ class FirebaseController {
 
       return true;
     } catch (e) {
-      print('Failed to send data: $e');
       return false;
     }
   }
@@ -154,8 +149,102 @@ class FirebaseController {
 
       return user;
     } catch (e) {
-      print('Failed to get data: $e');
       return User('', '', '', [], '');
+    }
+  }
+
+  // get photo data from firebase
+  Future<Photo> getPhotoData(String id) async {
+    try {
+      // connect to Firebase Firestore
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // get data from 'photos' collection
+      DocumentSnapshot snapshot =
+          await firestore.collection('photos').doc(id).get();
+
+      // convert Map type data to Photo object
+      Photo photo = Photo(
+        (snapshot.data() as Map<String, dynamic>)['id'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['uploaderId'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['uploadTime'] ?? '',
+      );
+
+      return photo;
+    } catch (e) {
+      return Photo('', '', '');
+    }
+  }
+
+  // get gallery data from firebase
+  Future<Gallery> getGalleryData(String id) async {
+    try {
+      // connect to Firebase Firestore
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // get data from 'galleries' collection
+      DocumentSnapshot snapshot =
+          await firestore.collection('galleries').doc(id).get();
+
+      // convert Map type data to Gallery object
+      Gallery gallery = Gallery(
+        (snapshot.data() as Map<String, dynamic>)['id'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['appointmentId'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['photoIds'] ?? [],
+      );
+
+      return gallery;
+    } catch (e) {
+      return Gallery('', '', []);
+    }
+  }
+
+  // get friend request data from firebase
+  Future<FriendRequest> getFriendRequestData(String id) async {
+    try {
+      // connect to Firebase Firestore
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // get data from 'friendRequests' collection
+      DocumentSnapshot snapshot =
+          await firestore.collection('friendRequests').doc(id).get();
+
+      // convert Map type data to FriendRequest object
+      FriendRequest friendRequest = FriendRequest(
+        (snapshot.data() as Map<String, dynamic>)['id'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['requesterId'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['responderId'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['ok'] ?? false,
+      );
+
+      return friendRequest;
+    } catch (e) {
+      return FriendRequest('', '', '', false);
+    }
+  }
+
+  // get appointment data from firebase
+  Future<Appointment> getAppointmentData(String id) async {
+    try {
+      // connect to Firebase Firestore
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // get data from 'appointments' collection
+      DocumentSnapshot snapshot =
+          await firestore.collection('appointments').doc(id).get();
+
+      // convert Map type data to Appointment object
+      Appointment appointment = Appointment(
+        (snapshot.data() as Map<String, dynamic>)['id'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['title'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['date'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['people'] ?? [],
+        (snapshot.data() as Map<String, dynamic>)['galleryId'] ?? '',
+      );
+
+      return appointment;
+    } catch (e) {
+      return Appointment('', '', '' as DateTime, [], '');
     }
   }
 
