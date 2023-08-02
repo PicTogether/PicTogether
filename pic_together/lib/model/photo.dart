@@ -5,7 +5,7 @@ class Photo {
   late String uploaderId;
   late DateTime uploadTime;
 
-  Photo(String id, String uploaderId, String uploadTime) {
+  Photo(String id, String uploaderId, DateTime uploadTime) {
     this.id = id;
     this.uploaderId = uploaderId;
     this.uploadTime = uploadTime as DateTime;
