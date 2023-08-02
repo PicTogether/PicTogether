@@ -26,12 +26,12 @@ class _MainViewState extends State<MainView> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
-              'PicTogether',
-          style: TextStyle(color: Colors.black),),
+            'PicTogether',
+            style: TextStyle(color: Colors.black),),
           actions: [
             IconButton(
               icon: Icon(Icons.add,
-              color: Colors.black,),
+                color: Colors.black,),
               onPressed: () {  },
               tooltip: '약속 추가',
             )
@@ -53,8 +53,8 @@ class _MainViewState extends State<MainView> {
                   },
                   backArrow: const DecoratedBox(
                     decoration: BoxDecoration(
-                    color: Colors.white,
-                    //shape : BoxShape.circle,
+                      color: Colors.white,
+                      //shape : BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.keyboard_arrow_left_rounded,
