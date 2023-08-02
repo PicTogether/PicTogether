@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_flutter_aj/calender_flutter.dart';
+import 'package:pic_together/view/appointment_view/select_period_view.dart';
 
 void main() {
   runApp(const MainView());
@@ -123,6 +124,7 @@ class _MainViewState extends State<MainView> {
           children: [
             FloatingActionButton(
               onPressed: () {
+                _openSelectPeriodView(context);
                 // 약속 추가하는 작업 수행
               },
               child: Icon(Icons.add),
@@ -147,6 +149,13 @@ class _MainViewState extends State<MainView> {
           ],
         ),
       ),
+    );
+  }
+
+  void _openSelectPeriodView(BuildContext context){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SelectPeriodView()),
     );
   }
 }
