@@ -248,8 +248,33 @@ class FirebaseController {
     }
   }
 
-  //파이어베이스 공식문서를 또 보면서
-// 1. 유저 id를 받아서 그 유저 객체를 반환하기. => 반환타입 Future<User>
-// 2. 유저 id를 받았을 때 그 유저가 어떤 약속들을 가지고 있는지
-// 3.
+  // get user appointment data with user id
+  Future<List<Appointment>> getUserAppointmentData(String id) async {
+    try {
+      // connect to Firebase Firestore
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // get data from 'appointments' collection
+      QuerySnapshot snapshot = await firestore
+          .collection('appointments')
+          .where('people', arrayContains: id)
+          .get();
+
+      // convert Map type data to Appointment object
+      List<Appointment> appointments = [];
+      snapshot.docs.forEach((doc) {
+        appointments.add(Appointment(
+          (doc.data() as Map<String, dynamic>)['id'] ?? '',
+          (doc.data() as Map<String, dynamic>)['title'] ?? '',
+          (doc.data() as Map<String, dynamic>)['date'] ?? '',
+          (doc.data() as Map<String, dynamic>)['people'] ?? [],
+          (doc.data() as Map<String, dynamic>)['galleryId'] ?? '',
+        ));
+      });
+
+      return appointments;
+    } catch (e) {
+      return [];
+    }
+  }
 }
