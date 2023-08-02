@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:pic_together/view/main_view/main_view.dart';
+import 'package:pic_together/view/appointment_view/select_period_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
