@@ -5,7 +5,8 @@ class Appointment {
   late List<String> people;
   late String galleryId;
 
-  Appointment(String id, DateTime date, List<String> people, String galleryId) {
+  Appointment(String id, String title, DateTime date, List<String> people,
+      String galleryId) {
     this.id = id;
     this.title = title;
     this.date = date;
