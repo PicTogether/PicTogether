@@ -4,7 +4,7 @@ class FriendRequest {
   late String id;
   late String requesterId;
   late String responderId;
-  bool ok = false
+  bool ok = false;
 
   FriendRequest(String id, String requesterId, String responderId, bool ok) {
     this.id = id;
