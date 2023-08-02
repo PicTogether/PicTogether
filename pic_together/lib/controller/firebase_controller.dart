@@ -2,6 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pic_together/model/photo.dart';
 import 'package:pic_together/model/user.dart';
 
+import '../model/appointment.dart';
+import '../model/friend_request.dart';
+import '../model/gallery.dart';
+
 class FirebaseController {
   // send user data to firebase
   Future<bool> sendUserData(User user) async {
@@ -11,14 +15,15 @@ class FirebaseController {
 
       // convert User object to Map type
       Map<String, dynamic> userData = {
-        'userId': user.userId,
+        'id': user.id,
         'name': user.name,
         'phoneNum': user.phoneNum,
         'friends': user.friends,
+        'appointmentId': user.appointmentId,
       };
 
       // add data to 'users' collection
-      await firestore.collection('users').doc(user.userId).set(userData);
+      await firestore.collection('users').doc(user.id).set(userData);
 
       return true;
     } catch (e) {
@@ -34,10 +39,92 @@ class FirebaseController {
       FirebaseFirestore firestore = FirebaseFirestore.instance;
 
       // convert Photo object to Map type
-      Map<String, dynamic> photoData = {};
+      Map<String, dynamic> photoData = {
+        'id': photo.id,
+        'uploaderId': photo.uploaderId,
+        'uploadTime': photo.uploadTime,
+      };
 
       // add data to 'photos' collection
       await firestore.collection('photos').doc(photo.id).set(photoData);
+
+      return true;
+    } catch (e) {
+      print('Failed to send data: $e');
+      return false;
+    }
+  }
+
+  // send gallery data to firebase
+  Future<bool> sendGalleryData(Gallery gallery) async {
+    try {
+      // connect to Firebase Firestore
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // convert Gallery object to Map type
+      Map<String, dynamic> galleryData = {
+        'id': gallery.id,
+        'appointmentId': gallery.appointmentId,
+        'photoIds': gallery.photoIds,
+      };
+
+      // add data to 'galleries' collection
+      await firestore.collection('galleries').doc(gallery.id).set(galleryData);
+
+      return true;
+    } catch (e) {
+      print('Failed to send data: $e');
+      return false;
+    }
+  }
+
+  // send friend request data to firebase
+  Future<bool> sendFriendRequestData(FriendRequest friendRequest) async {
+    try {
+      // connect to Firebase Firestore
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // convert FriendRequest object to Map type
+      Map<String, dynamic> friendRequestData = {
+        'id': friendRequest.id,
+        'requesterId': friendRequest.requesterId,
+        'responderId': friendRequest.responderId,
+        'ok': friendRequest.ok,
+      };
+
+      // add data to 'friendRequests' collection
+      await firestore
+          .collection('friendRequests')
+          .doc(friendRequest.id)
+          .set(friendRequestData);
+
+      return true;
+    } catch (e) {
+      print('Failed to send data: $e');
+      return false;
+    }
+  }
+
+  // send appointment data to firebase
+  Future<bool> sendAppointmentData(Appointment appointment) async {
+    try {
+      // connect to Firebase Firestore
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // convert Appointment object to Map type
+      Map<String, dynamic> appointmentData = {
+        'id': appointment.id,
+        'title': appointment.title,
+        'date': appointment.date,
+        'people': appointment.people,
+        'galleryId': appointment.galleryId,
+      };
+
+      // add data to 'appointments' collection
+      await firestore
+          .collection('appointments')
+          .doc(appointment.id)
+          .set(appointmentData);
 
       return true;
     } catch (e) {
