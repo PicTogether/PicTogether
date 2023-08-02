@@ -133,6 +133,32 @@ class FirebaseController {
     }
   }
 
+  // get user data from firebase
+  Future<User> getUserData(String id) async {
+    try {
+      // connect to Firebase Firestore
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // get data from 'users' collection
+      DocumentSnapshot snapshot =
+          await firestore.collection('users').doc(id).get();
+
+      // convert Map type data to User object
+      User user = User(
+        (snapshot.data() as Map<String, dynamic>)['id'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['name'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['phoneNum'] ?? '',
+        (snapshot.data() as Map<String, dynamic>)['friends'] ?? [],
+        (snapshot.data() as Map<String, dynamic>)['appointmentId'] ?? '',
+      );
+
+      return user;
+    } catch (e) {
+      print('Failed to get data: $e');
+      return User('', '', '', [], '');
+    }
+  }
+
   //파이어베이스 공식문서를 또 보면서
 // 1. 유저 id를 받아서 그 유저 객체를 반환하기. => 반환타입 Future<User>
 // 2. 유저 id를 받았을 때 그 유저가 어떤 약속들을 가지고 있는지
