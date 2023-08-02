@@ -172,7 +172,7 @@ class FirebaseController {
 
       return photo;
     } catch (e) {
-      return Photo('', '', '');
+      return Photo('', '', DateTime.now());
     }
   }
 
