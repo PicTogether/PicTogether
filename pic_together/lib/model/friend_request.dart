@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 class FriendRequest {
   late String id;
   late String requesterId;
@@ -9,5 +11,13 @@ class FriendRequest {
     this.requesterId = requesterId;
     this.responderId = responderId;
     this.ok = ok;
+  }
+
+  // named constructor
+  FriendRequest.newFriendRequest(String requesterId, String responderId) {
+    var uuid = Uuid();
+    this.id = uuid.v4();
+    this.requesterId = requesterId;
+    this.responderId = responderId;
   }
 }
