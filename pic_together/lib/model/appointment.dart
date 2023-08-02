@@ -7,23 +7,15 @@ class Appointment {
   late List<String> people;
   late String galleryId;
 
-  Appointment(String id, String title, DateTime date, List<String> people,
-      String galleryId) {
-    this.id = id;
-    this.title = title;
-    this.date = date;
-    this.people = people;
-    this.galleryId = galleryId;
-  }
+  Appointment(this.id, this.title, this.date, this.people, this.galleryId);
 
   // named constructor
-  Appointment.newAppointment(
-      String title, DateTime date, List<String> people, String galleryId) {
+  Appointment.newAppointment(String title, DateTime date) {
     var uuid = Uuid();
     this.id = uuid.v4();
     this.title = title;
     this.date = date;
-    this.people = people;
-    this.galleryId = galleryId;
+    this.people = [];
+    this.galleryId = uuid.v4();
   }
 }
