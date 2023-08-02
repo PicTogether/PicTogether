@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_flutter_aj/calender_flutter.dart';
+import 'package:pic_together/gallery_view/gallery_view.dart';
+import 'package:pic_together/view/appointment_view/add_appointment_view.dart';
 
 void main() {
   runApp(const MainView());
@@ -126,7 +128,12 @@ class _MainViewState extends State<MainView> {
           children: [
             FloatingActionButton(
               onPressed: () {
-                // 사진첩 들어가는는 작업 수행
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>GalleryView(),
+                    ),
+                );
               },
               child: Icon(Icons.photo_library,),
               backgroundColor: Color(0xff655DBB),
